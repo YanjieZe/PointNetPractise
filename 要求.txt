@@ -1,0 +1,12 @@
+要求：
+
+    1. 使用np.load读取文件夹中的npy二进制点云文件，每个点云有2048个点，存储xyz位置信息。
+    2. 使用PointNet分割网络结构搭建pytorch模型，参考 https://github.com/yanx27/Pointnet_Pointnet2_pytorch/blob/master/models/pointnet_part_seg.py#L9
+    3. 要求网络输入原始点云，在经过PointNet分割网络结构后输出相同的点云，使用Adam优化器进行优化。
+    4. 网络需要支持batch输入，并在cuda上运行。
+
+Hint:
+
+    1. 可以使用open3d库可视化点云。
+    2. learning rate一般从1e-3开始试。
+    3. 先完成dataloader部分，确保能输出类似(batch_size, 2048, 3)维度的点云。
