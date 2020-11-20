@@ -6,6 +6,7 @@ learning_rate = 0.001
 batch_size =5
 part_num = 1
 validation_split = 0.2
+shuffle_dataset = True
 
 
 model = partnet(part_num)
@@ -19,4 +20,17 @@ optimizer = torch.optim.Adam(
         )
 
 dataset = pcdataset(transform=None)
+
+"""
+part segmentation任务的输出是什么？
+到底什么是part segmentation？
+
+还剩下未做的：
+数据预处理
+数据集的label没有设置
+搞清楚什么part segmentation
+进行训练
+"""
+
+
 loader = DataLoader(dataset,batch_size)
