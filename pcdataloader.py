@@ -29,7 +29,7 @@ def loadnpy():
 # point cloud dataset
 class pcdataset(Dataset):
 
-    def __init__(self, transform=None):
+    def __init__(self, transform=None,split='train'):
         self.data = loadnpy()
         self.transform = transform
 

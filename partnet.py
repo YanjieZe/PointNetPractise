@@ -59,6 +59,7 @@ class partnet(nn.Module):
         out5 = self.bn5(self.conv5(out4))
         out_max = torch.max(out5, 2, keepdim=True)[0]
         out_max = out_max.view(-1, 2048)
+        print(out_max.shape)
 
         out_max = torch.cat([out_max,label.squeeze(1)],1)
         expand = out_max.view(-1, 2048+16, 1).repeat(1, 1, N)
@@ -87,9 +88,10 @@ class get_loss(torch.nn.Module):
 
 
 if __name__ == "__main__":
-    model = partnet(1,False)
-    xyz = torch.rand(2,3,2048)
-    label = torch.ones(2,2048)
+    bacth_size = 5
+    model = partnet(50,False)
+    xyz = torch.rand(bacth_size,3,2048)
+    label = torch.ones(bacth_size,16)# bacth_size * 16 label
     print(xyz.shape)
-    result, _ = model(xyz,xyz)
+    result, _ = model(xyz,label)
     print(result.shape)
