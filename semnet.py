@@ -8,7 +8,7 @@ import numpy as np
 
 
 class semnet(nn.Module):
-    def __init__(self,num_class,with_rgb=False):
+    def __init__(self,num_class=3,with_rgb=False):
         super(semnet,self).__init__()
         if with_rgb:
             channel = 6
@@ -52,7 +52,7 @@ class get_loss(torch.nn.Module):
 
 
 if __name__ == "__main__":
-    model = semnet(1,False).float()
+    model = semnet(3,False).float()
     xyz = torch.rand(2,3,2048)
     
     print(xyz.shape)

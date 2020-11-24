@@ -9,6 +9,7 @@ warnings.filterwarnings("ignore")
 
 def loadnpy():
     data = np.load("./hw/0.npy")
+    data = data.T
     data = np.expand_dims(data, axis=0)
     judge = 1
     for i in range(19):
@@ -19,6 +20,7 @@ def loadnpy():
 
         filename  ="./hw/%d.npy"%i
         a = np.load(filename)
+        a = a.T
         a= np.expand_dims(a,axis=0)
         data = np.vstack([data,a])
     
