@@ -7,8 +7,8 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 import os
 
-learning_rate = 1e-5
-batch_size = 5
+learning_rate = 1e-8
+batch_size = 3
 part_num = 1
 validation_split = 0.2
 shuffle_dataset = True
