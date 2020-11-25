@@ -34,10 +34,14 @@ class semnet(nn.Module):
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
         x = self.conv4(x)
-        x = x.transpose(2,1).contiguous()
-        x = F.log_softmax(x.view(-1,self.k), dim=-1)
-        x = x.view(batchsize, n_pts, self.k)
-        return x, trans_feat
+        # print("1:", x.shape)
+        x = x.transpose(2,1).contiguous()#
+        # print("2:",x.shape)
+        # x = F.log_softmax(x.view(-1,self.k), dim=-1)
+        # print("3:",x.shape)
+        # x = x.view(batchsize, n_pts, self.k)
+        # print("4:",x.shape)
+        return x
 
 class get_loss(torch.nn.Module):
     def __init__(self, mat_diff_loss_scale=0.001):
@@ -56,5 +60,5 @@ if __name__ == "__main__":
     xyz = torch.rand(2,3,2048)
     
     print(xyz.shape)
-    result, _ = model(xyz.float())
+    result= model(xyz.float())
     print(result.shape)

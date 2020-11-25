@@ -1,4 +1,4 @@
-from pcdataloader import pcdataset,DataLoader,pc_normalize
+from pcdataloader import pcdataset,DataLoader,pc_normalize,loadnpy1,loadnpy2
 from partnet import partnet
 from semnet import semnet
 import torch
@@ -7,17 +7,16 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 import os
 
-learning_rate = 1e-5
+learning_rate = 1e-7
 batch_size = 2
-validation_split = 0.2
 shuffle_dataset = True
-epoch = 30
+epoch = 10
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 model = semnet().float().to(device)
 
-if os.path.exists('params.pkl'):
-    model.load_state_dict(torch.load('params.pkl'))
+
+model.load_state_dict(torch.load('params.pkl'))
 
 optimizer = torch.optim.Adam(
             model.parameters(),
@@ -38,7 +37,7 @@ for e in range(epoch):
         x_train = xtrain.float().to(device)
         y_train = ytrain.float().to(device)
 
-        result,_ = model(x_train)
+        result = model(x_train)
         loss = loss_fn(result,y_train)
         print("epoch: ",e," idx: ",idx, " loss:", loss.item())
         train_log.write("epoch: "+str(e)+" idx: "+str(idx)+" loss:"+str(loss.item())+'\n')
@@ -46,5 +45,17 @@ for e in range(epoch):
         loss.backward()
         optimizer.step()
 
+torch.cuda.empty_cache()
+print("---------------------")
+
+# calculate the finnal loss
+data = torch.from_numpy(loadnpy1()).float().to(device) # 20*3*2048
+pointcloud = torch.from_numpy(loadnpy2()).float().to(device) # 20*2048*3
+result = model(data)
+final_loss = loss_fn(result,pointcloud)
+print("final total loss is: ", final_loss.item())
+
 train_log.close()
 torch.save(model.state_dict(), 'params.pkl')
+print("---------------------")
+print("Save model params finished.")
