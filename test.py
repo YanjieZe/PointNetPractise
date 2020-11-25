@@ -16,4 +16,4 @@ with torch.no_grad():
 
 pc_trained = result.to("cpu").numpy()
 pc_origin = loadnpy2()
-visualize(pc_trained[0])
+visualize(pc_trained[1])

@@ -34,7 +34,6 @@ class semnet(nn.Module):
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
         x = self.conv4(x)
-        # print("1:", x.shape)
         x = x.transpose(2,1).contiguous()#
         # print("2:",x.shape)
         # x = F.log_softmax(x.view(-1,self.k), dim=-1)
