@@ -7,10 +7,10 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 import os
 
-learning_rate = 1e-7
+learning_rate = 1e-6
 batch_size = 2
 shuffle_dataset = True
-epoch = 20
+epoch = 10
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 model = semnet().float().to(device)
@@ -40,10 +40,10 @@ for e in range(epoch):
         result = model(x_train)
         loss = loss_fn(result,y_train)
         
-        # train_log.write("epoch: "+str(e)+" idx: "+str(idx)+" loss:"+str(loss.item())+'\n')
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+    train_log.write("epoch: "+str(e)+" loss:"+str(loss.item())+'\n')
     print("epoch: ",e," loss:", loss.item())
 
 torch.cuda.empty_cache()
